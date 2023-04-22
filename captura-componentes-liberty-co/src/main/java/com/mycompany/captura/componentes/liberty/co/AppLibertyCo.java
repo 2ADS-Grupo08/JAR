@@ -98,7 +98,7 @@ public class AppLibertyCo {
         Integer cont = 1;
         for (Janela janela : janelas) {
             if (janela.isVisivel() == true) {
-                fraseJanela.add((String.format("\nJanelas %d"
+                fraseJanela.add((String.format("\n\nJanelas %d"
                         + "\nPID: %d"
                         + "\nId da Janela: %d"
                         + "\nTítulo: %s"
