@@ -1,1 +1,11 @@
-com/mycompany/captura/componentes/liberty/co/AppLibertyCo.class
+captura/AppLibertyCo.class
+inserts/Insercao.class
+captura/Auxiliar.class
+tabelas/Log.class
+tabelas/NivelAlerta.class
+tabelas/Componente.class
+telas/TelaCaptura$1.class
+telas/TelaCaptura$1$1.class
+tabelas/Maquina.class
+telas/TelaCaptura.class
+captura/Conexao.class

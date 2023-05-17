@@ -1,2 +1,9 @@
-/home/mari/Documentos/SPTECH/Segundo Semestre/Sprint/JAR/captura-componentes-liberty-co/src/main/java/com/mycompany/captura/componentes/liberty/co/AppLibertyCo.java
-/home/mari/Documentos/SPTECH/Segundo Semestre/Sprint/JAR/captura-componentes-liberty-co/src/main/java/com/mycompany/captura/componentes/liberty/co/Auxiliar.java
+/home/mari/Documentos/SPTECH/segundo_semestre/Sprint/JAR/captura-componentes-liberty-co/src/main/java/tabelas/Componente.java
+/home/mari/Documentos/SPTECH/segundo_semestre/Sprint/JAR/captura-componentes-liberty-co/src/main/java/captura/Conexao.java
+/home/mari/Documentos/SPTECH/segundo_semestre/Sprint/JAR/captura-componentes-liberty-co/src/main/java/tabelas/Maquina.java
+/home/mari/Documentos/SPTECH/segundo_semestre/Sprint/JAR/captura-componentes-liberty-co/src/main/java/tabelas/Log.java
+/home/mari/Documentos/SPTECH/segundo_semestre/Sprint/JAR/captura-componentes-liberty-co/src/main/java/telas/TelaCaptura.java
+/home/mari/Documentos/SPTECH/segundo_semestre/Sprint/JAR/captura-componentes-liberty-co/src/main/java/tabelas/NivelAlerta.java
+/home/mari/Documentos/SPTECH/segundo_semestre/Sprint/JAR/captura-componentes-liberty-co/src/main/java/captura/AppLibertyCo.java
+/home/mari/Documentos/SPTECH/segundo_semestre/Sprint/JAR/captura-componentes-liberty-co/src/main/java/inserts/Insercao.java
+/home/mari/Documentos/SPTECH/segundo_semestre/Sprint/JAR/captura-componentes-liberty-co/src/main/java/captura/Auxiliar.java
