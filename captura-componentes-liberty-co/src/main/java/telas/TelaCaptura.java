@@ -306,7 +306,6 @@ public class TelaCaptura extends javax.swing.JFrame {
                         List<Componente> componentes = jdbcAzure.query("SELECT * FROM Componente WHERE fkMaquina = ?;",
                                 new BeanPropertyRowMapper(Componente.class), maquinas.get(0).getIdMaquina());
                         for (Componente c : componentes) {
-                            System.out.println("oioioi");
                             Insercao.inserirDadosLog(jdbcAzure, jdbcMysql, c);
                         }
                         tela.lb_processador.setText(String.format("%.2f%%", looca.getProcessador().getUso()));

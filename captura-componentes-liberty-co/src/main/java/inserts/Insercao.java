@@ -115,6 +115,8 @@ public class Insercao {
                 }
             }
         }
+        
+        System.out.println(String.format("Dados inseridos para o componente %s", componente.getNomeComponente()));
 
 //        //Inserindo o emUso do Disco na tabela Log
 //        for (int i = 0; i < discos.size(); i++) {
