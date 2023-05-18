@@ -43,8 +43,8 @@ public class Insercao {
             conexaoAzure.update("INSERT INTO Componente (nomeComponente, total, modelo, fkMaquina) VALUES (?, ?, ?, ?);",
                     "Disco Rígido", totalDisco, disco.getModelo(), fkMaquina);
             //INSERT DO DISCO DOCKER
-//            conexaoMysql.update("INSERT INTO Componente (nomeComponente, total, modelo, fkMaquina) VALUES (?, ?, ?, ?);",
-//                    "Disco Rígido", totalDisco, disco.getModelo(), fkMaquina);
+            conexaoMysql.update("INSERT INTO Componente (nomeComponente, total, modelo, fkMaquina) VALUES (?, ?, ?, ?);",
+                    "Disco Rígido", totalDisco, disco.getModelo(), fkMaquina);
         }
 
         //Inserindo o CPU na tabela Componente
@@ -54,8 +54,8 @@ public class Insercao {
         conexaoAzure.update("INSERT INTO Componente (nomeComponente, total, modelo, fkMaquina) VALUES (?, ?, ?, ?);",
                 "Processador", totalCpu, modeloCpu, fkMaquina);
         //INSERT DA CPU DOCKER
-//        conexaoMysql.update("INSERT INTO Componente (nomeComponente, total, modelo, fkMaquina) VALUES (?, ?, ?, ?);",
-//                "Processador", totalCpu, modeloCpu, fkMaquina);
+        conexaoMysql.update("INSERT INTO Componente (nomeComponente, total, modelo, fkMaquina) VALUES (?, ?, ?, ?);",
+                "Processador", totalCpu, modeloCpu, fkMaquina);
 
         //Inserindo a RAM na tabela Componente
         Double totalRam = memoria.getTotal() / Math.pow(10, 9);
@@ -63,8 +63,8 @@ public class Insercao {
         conexaoAzure.update("INSERT INTO Componente (nomeComponente, total, modelo, fkMaquina) VALUES (?, ?, ?, ?);",
                 "Memória RAM", totalRam, null, fkMaquina);
         //INSERT DA CPU DOCKER
-//        conexaoMysql.update("INSERT INTO Componente (nomeComponente, total, modelo, fkMaquina) VALUES (?, ?, ?, ?);",
-//                "Memória RAM", totalRam, null, fkMaquina);
+        conexaoMysql.update("INSERT INTO Componente (nomeComponente, total, modelo, fkMaquina) VALUES (?, ?, ?, ?);",
+                "Memória RAM", totalRam, null, fkMaquina);
 
     }
 
@@ -88,18 +88,18 @@ public class Insercao {
             //INSERT DO DISCO AZURE
             conexaoAzure.update("INSERT INTO Log (momentoCaptura, emUso, fkComponente, fkMaquina) VALUES (GETDATE(), ?, ?, ?);",
                     cpuEmUso, componente.getIdComponente(), componente.getFkMaquina());
-            //INSERT DO DISCO DOCKER
-//            conexaoMysql.update("INSERT INTO Log (momentoCaptura, emUso, fkComponente, fkNivelAlerta, fkMaquina, fkGestor) VALUES (?, ?, ?, ?, ?, ?);",
-//                    LocalDateTime.now(), cpuEmUso, componente.getIdComponente(), componente.getFkNivelAlerta(), componente.getFkMaquina(), componente.getFkGestor());
+            // INSERT DA CPU DOCKER
+            conexaoMysql.update("INSERT INTO Log (momentoCaptura, emUso, fkComponente, fkMaquina) VALUES (CURRENT_TIMESTAMP, ?, ?, null);",
+                    cpuEmUso, componente.getIdComponente());
         } else if (componente.getNomeComponente().equalsIgnoreCase("Memória RAM")) {
             //Inserindo o emUso da RAM na tabela Log
             Double ramEmUso = memoria.getEmUso() / Math.pow(10, 9);
             //INSERT DO DISCO AZURE
             conexaoAzure.update("INSERT INTO Log (momentoCaptura, emUso, fkComponente, fkMaquina) VALUES (GETDATE(), ?, ?, ?);",
                     ramEmUso, componente.getIdComponente(), componente.getFkMaquina());
-            //INSERT DO DISCO DOCKER
-//            conexaoMysql.update("INSERT INTO Log (momentoCaptura, emUso, fkComponente, fkNivelAlerta, fkMaquina, fkGestor) VALUES (?, ?, ?, ?, ?, ?);",
-//                    LocalDateTime.now(), ramEmUso, componente.getIdComponente(), componente.getFkNivelAlerta(), componente.getFkMaquina(), componente.getFkGestor());
+            //INSERT DA RAM DOCKER
+            conexaoMysql.update("INSERT INTO Log (momentoCaptura, emUso, fkComponente, fkMaquina) VALUES (CURRENT_TIMESTAMP, ?, ?, null);",
+                    ramEmUso, componente.getIdComponente());
         } else if (componente.getNomeComponente().equalsIgnoreCase("Disco Rígido")) {
             for (int i = 0; i < discos.size(); i++) {
                 if (discos.get(i).getModelo().equalsIgnoreCase(componente.getModelo())) {
@@ -109,6 +109,9 @@ public class Insercao {
                     //INSERT DO DISCO AZURE
                     conexaoAzure.update("INSERT INTO Log (momentoCaptura, emUso, fkComponente, fkMaquina) VALUES (GETDATE(), ?, ?, ?);",
                             discoEmUso, componente.getIdComponente(), componente.getFkMaquina());
+                    //INSERT DO DISCO DOCKER
+                    conexaoMysql.update("INSERT INTO Log (momentoCaptura, emUso, fkComponente, fkMaquina) VALUES (CURRENT_TIMESTAMP, ?, ?, null);",
+                            discoEmUso, componente.getIdComponente());
                 }
             }
         }

@@ -30,7 +30,6 @@ public class TelaCaptura extends javax.swing.JFrame {
     private static JdbcTemplate jdbcAzure;
     private static JdbcTemplate jdbcMysql;
     private static Looca looca;
-    private static List<Componente> componentes = new ArrayList();
 
     /**
      * Creates new form TelaCaptura
@@ -269,6 +268,7 @@ public class TelaCaptura extends javax.swing.JFrame {
 
                 List<Componente> getFkMaquina = new ArrayList();
                 List<Maquina> maquinas = new ArrayList();
+                List<Componente> componentes = new ArrayList();
 
                 maquinas = jdbcAzure.query("SELECT * FROM Maquina WHERE hostName = ?;",
                         new BeanPropertyRowMapper(Maquina.class), hostNameMaquina);
@@ -301,8 +301,12 @@ public class TelaCaptura extends javax.swing.JFrame {
                 new Timer().scheduleAtFixedRate(new TimerTask() {
                     @Override
                     public void run() {
-                        System.out.println("oioioi");
+                        List<Maquina> maquinas = jdbcAzure.query("SELECT * FROM Maquina WHERE hostName = ?;",
+                        new BeanPropertyRowMapper(Maquina.class), hostNameMaquina);
+                        List<Componente> componentes = jdbcAzure.query("SELECT * FROM Componente WHERE fkMaquina = ?;",
+                                new BeanPropertyRowMapper(Componente.class), maquinas.get(0).getIdMaquina());
                         for (Componente c : componentes) {
+                            System.out.println("oioioi");
                             Insercao.inserirDadosLog(jdbcAzure, jdbcMysql, c);
                         }
                         tela.lb_processador.setText(String.format("%.2f%%", looca.getProcessador().getUso()));
