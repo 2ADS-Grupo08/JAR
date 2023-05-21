@@ -101,7 +101,6 @@ public class AppLibertyCo {
             Double tamanhoDisco = disco.getTamanho() / Math.pow(10, 9);
             Volume volume = volumes.get(i);
             Double emUso = (volume.getTotal() - volume.getDisponivel()) / Math.pow(10, 9);
-            System.out.println(disco.getSerial());
             hdInfo.add(String.format("Disco Rígido %d"
                     + "\nModelo: %s"
                     + "\nTamanho total: %.2fGB"
@@ -134,13 +133,16 @@ public class AppLibertyCo {
         }
 
         /*--------------------------------------------------*/
-        System.out.println(fraseCpu);
-        System.out.println(separador);
-        System.out.println(fraseRam);
-        System.out.println(separador);
-        System.out.println(hdInfo);
-        System.out.println(separador);
-        System.out.println(fraseJanela);
+//        System.out.println(fraseCpu);
+//        System.out.println(separador);
+//        System.out.println(fraseRam);
+//        System.out.println(separador);
+//        System.out.println(hdInfo);
+//        System.out.println(separador);
+//        System.out.println(fraseJanela);
+        
+        String sistemaOperacional = looca.getSistema().getFabricante();
+        System.out.println(sistemaOperacional);
 
         //INSERT DA CPU AZURE
 //        c.update("INSERT INTO Componente (nomeComponente, total, modelo,fkNivelAlerta, fkMaquina, fkGestor) VALUES (?, ?, ?, ?, ?, ?);",
