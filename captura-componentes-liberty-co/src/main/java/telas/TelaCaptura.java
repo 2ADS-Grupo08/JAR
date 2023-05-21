@@ -117,6 +117,7 @@ public class TelaCaptura extends javax.swing.JFrame {
     private void encontrarJanelas(Integer fkMaquina) {
         Janela janelas = new Janela();
         List<Long> pids = new ArrayList();
+        List<String> listaNomeJanelas = new ArrayList();
 
         List<Janela> listaJanelasBanco = jdbcAzure.query("SELECT * FROM Janela WHERE fkMaquina = ?",
                 new BeanPropertyRowMapper(Janela.class), fkMaquina);
@@ -127,16 +128,17 @@ public class TelaCaptura extends javax.swing.JFrame {
                 System.out.println(tituloJanelaLooca);
                 if (tituloJanelaLooca.contains(j.getNomeJanela())) {
                     pids.add(looca.getGrupoDeJanelas().getJanelasVisiveis().get(i).getPid());
+                    listaNomeJanelas.add(j.getNomeJanela());
                 }
             }
         }
-        encerrarJanelas(pids);
+        encerrarJanelas(pids, listaNomeJanelas);
     }
     
-    private void encerrarJanelas(List<Long> pids) {
-        for (Long pid : pids) {
+    private void encerrarJanelas(List<Long> pids, List<String> listaNomeJanelas) {
+        for (int i = 0; i < listaNomeJanelas.size(); i++) {
             try {
-                EncerraJanelas.verificarFabricante(pid + "");
+                EncerraJanelas.verificarFabricante(pids.get(i) + "", listaNomeJanelas.get(i));
             } catch (IOException ex) {
                 Logger.getLogger(TelaCaptura.class.getName()).log(Level.SEVERE, null, ex);
             }

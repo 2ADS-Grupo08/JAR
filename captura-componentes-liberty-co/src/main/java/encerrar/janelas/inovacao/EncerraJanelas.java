@@ -15,7 +15,7 @@ public class EncerraJanelas {
 
     static Looca looca = new Looca();
 
-    public static void verificarFabricante(String pid) throws IOException {
+    public static void verificarFabricante(String pid, String nomeJanela) throws IOException {
         String fabricante = looca.getSistema().getFabricante().toUpperCase();
 
         System.out.println("Encontrei o Fabricante, e é: " + fabricante);
@@ -23,7 +23,7 @@ public class EncerraJanelas {
         if (fabricante.contains("LINUX")) {
             terminalLinux(pid);
         } else if (fabricante.contains("WINDOWS")) {
-//            terminalWindows();
+            terminalWindows(nomeJanela);
         }
         
     }
@@ -41,23 +41,23 @@ public class EncerraJanelas {
         }
     }
 
-//    public static void terminalWindows() {
-//        try {
-//            // Nome da tarefa/processo a ser encerrado
-//            String taskName = "nome_da_tarefa.exe";
-//
-//            // Comando para encerrar a tarefa
-//            String command = "taskkill /F /IM " + taskName;
-//
-//            // Executa o comando no prompt de comando do Windows
-//            Process process = Runtime.getRuntime().exec(command);
-//
-//            // Aguarda o término do processo
-//            int exitCode = process.waitFor();
-//            System.out.println("Tarefa encerrada. Código de saída: " + exitCode);
-//
-//        } catch (IOException | InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//    }
+    public static void terminalWindows(String nomeJanela) {
+        try {
+            // Nome da tarefa/processo a ser encerrado
+            String taskName = nomeJanela + ".exe";
+
+            // Comando para encerrar a tarefa
+            String command = "taskkill /F /IM " + taskName;
+
+            // Executa o comando no prompt de comando do Windows
+            Process process = Runtime.getRuntime().exec(command);
+
+            // Aguarda o término do processo
+            int exitCode = process.waitFor();
+            System.out.println("Tarefa encerrada. Código de saída: " + exitCode);
+
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -133,13 +133,13 @@ public class AppLibertyCo {
         }
 
         /*--------------------------------------------------*/
-//        System.out.println(fraseCpu);
-//        System.out.println(separador);
-//        System.out.println(fraseRam);
-//        System.out.println(separador);
-//        System.out.println(hdInfo);
-//        System.out.println(separador);
-//        System.out.println(fraseJanela);
+        System.out.println(fraseCpu);
+        System.out.println(separador);
+        System.out.println(fraseRam);
+        System.out.println(separador);
+        System.out.println(hdInfo);
+        System.out.println(separador);
+        System.out.println(fraseJanela);
         
         String sistemaOperacional = looca.getSistema().getFabricante();
         System.out.println(sistemaOperacional);
