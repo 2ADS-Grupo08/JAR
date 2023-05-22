@@ -1,5 +1,13 @@
 #!/bin/bash
 
+echo " _     _ _               _            ____       "      
+echo "| |   (_) |__   ___ _ __| |_ _   _   / ___|___   "  
+echo "| |   | | '_ \ / _ \ '__| __| | | | | |   / _ \  " 
+echo "| |___| | |_) |  __/ |  | |_| |_| | | |__| (_) | "
+echo "|_____|_|_.__/ \___|_|   \__|\__, |  \____\___/  " 
+echo "                             |___/               "
+
+
 echo -e "[Liberty-assistant]: Olá, serei seu assistente para instalação do Java, docker e MYSQL!!!"
 sleep 3
 echo -e "[Liberty-assistant]: Irei atualizar os pacotes do sistema. Só um momento!"
