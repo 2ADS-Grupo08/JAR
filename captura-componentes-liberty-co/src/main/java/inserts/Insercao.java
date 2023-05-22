@@ -38,33 +38,52 @@ public class Insercao {
             Disco disco = discos.get(i);
             Double totalDisco = disco.getTamanho() / Math.pow(10, 9);
 
-            //MARI VC TEM Q VALIDAR OS NULL DO FK
-            //INSERT DO DISCO AZURE
-            conexaoAzure.update("INSERT INTO Componente (nomeComponente, total, modelo, fkMaquina) VALUES (?, ?, ?, ?);",
-                    "Disco Rígido", totalDisco, disco.getModelo(), fkMaquina);
-            //INSERT DO DISCO DOCKER
-            conexaoMysql.update("INSERT INTO Componente (nomeComponente, total, modelo, fkMaquina) VALUES (?, ?, ?, ?);",
-                    "Disco Rígido", totalDisco, disco.getModelo(), fkMaquina);
+            if(looca.getSistema().getFabricante().contains("Linux")) {
+                //INSERT DO DISCO AZURE
+                conexaoAzure.update("INSERT INTO Componente (nomeComponente, total, modelo, fkMaquina) VALUES (?, ?, ?, ?);",
+                        "Disco Rígido", totalDisco, disco.getModelo(), fkMaquina);
+                //INSERT DO DISCO DOCKER
+                conexaoMysql.update("INSERT INTO Componente (nomeComponente, total, modelo, fkMaquina) VALUES (?, ?, ?, ?);",
+                        "Disco Rígido", totalDisco, disco.getModelo(), fkMaquina);
+            } else {
+                //INSERT DO DISCO AZURE
+                conexaoAzure.update("INSERT INTO Componente (nomeComponente, total, modelo, fkMaquina) VALUES (?, ?, ?, ?);",
+                        "Disco Rígido", totalDisco, disco.getModelo(), fkMaquina);
+            }
         }
 
         //Inserindo o CPU na tabela Componente
         String modeloCpu = cpu.getNome();
         Double totalCpu = cpu.getFrequencia() / Math.pow(10, 9);
-        //INSERT DA CPU AZURE
-        conexaoAzure.update("INSERT INTO Componente (nomeComponente, total, modelo, fkMaquina) VALUES (?, ?, ?, ?);",
-                "Processador", totalCpu, modeloCpu, fkMaquina);
-        //INSERT DA CPU DOCKER
-        conexaoMysql.update("INSERT INTO Componente (nomeComponente, total, modelo, fkMaquina) VALUES (?, ?, ?, ?);",
-                "Processador", totalCpu, modeloCpu, fkMaquina);
+        
+        if(looca.getSistema().getFabricante().contains("Linux")) {
+            //INSERT DA CPU AZURE
+            conexaoAzure.update("INSERT INTO Componente (nomeComponente, total, modelo, fkMaquina) VALUES (?, ?, ?, ?);",
+                    "Processador", totalCpu, modeloCpu, fkMaquina);
+            //INSERT DA CPU DOCKER
+            conexaoMysql.update("INSERT INTO Componente (nomeComponente, total, modelo, fkMaquina) VALUES (?, ?, ?, ?);",
+                    "Processador", totalCpu, modeloCpu, fkMaquina);
+        } else {
+            //INSERT DA CPU AZURE
+            conexaoAzure.update("INSERT INTO Componente (nomeComponente, total, modelo, fkMaquina) VALUES (?, ?, ?, ?);",
+                    "Processador", totalCpu, modeloCpu, fkMaquina);
+        }
 
         //Inserindo a RAM na tabela Componente
         Double totalRam = memoria.getTotal() / Math.pow(10, 9);
-        //INSERT DA CPU AZURE
-        conexaoAzure.update("INSERT INTO Componente (nomeComponente, total, modelo, fkMaquina) VALUES (?, ?, ?, ?);",
-                "Memória RAM", totalRam, null, fkMaquina);
-        //INSERT DA CPU DOCKER
-        conexaoMysql.update("INSERT INTO Componente (nomeComponente, total, modelo, fkMaquina) VALUES (?, ?, ?, ?);",
-                "Memória RAM", totalRam, null, fkMaquina);
+        
+        if(looca.getSistema().getFabricante().contains("Linux")) {
+            //INSERT DA CPU AZURE
+            conexaoAzure.update("INSERT INTO Componente (nomeComponente, total, modelo, fkMaquina) VALUES (?, ?, ?, ?);",
+                    "Memória RAM", totalRam, null, fkMaquina);
+            //INSERT DA CPU DOCKER
+            conexaoMysql.update("INSERT INTO Componente (nomeComponente, total, modelo, fkMaquina) VALUES (?, ?, ?, ?);",
+                    "Memória RAM", totalRam, null, fkMaquina);
+        } else {
+            //INSERT DA CPU AZURE
+            conexaoAzure.update("INSERT INTO Componente (nomeComponente, total, modelo, fkMaquina) VALUES (?, ?, ?, ?);",
+                    "Memória RAM", totalRam, null, fkMaquina);
+        }
 
     }
 
@@ -85,69 +104,55 @@ public class Insercao {
             //Inserindo o emUso da CPU na tabela Log
             Double cpuEmUso = cpu.getUso();
 
-            //INSERT DO DISCO AZURE
-            conexaoAzure.update("INSERT INTO Log (momentoCaptura, emUso, fkComponente, fkMaquina) VALUES (GETDATE(), ?, ?, ?);",
-                    cpuEmUso, componente.getIdComponente(), componente.getFkMaquina());
-            // INSERT DA CPU DOCKER
-            conexaoMysql.update("INSERT INTO Log (momentoCaptura, emUso, fkComponente, fkMaquina) VALUES (CURRENT_TIMESTAMP, ?, ?, null);",
-                    cpuEmUso, componente.getIdComponente());
+            if(looca.getSistema().getFabricante().contains("Linux")) {
+                //INSERT DO DISCO AZURE
+                conexaoAzure.update("INSERT INTO Log (momentoCaptura, emUso, fkComponente, fkMaquina) VALUES (GETDATE(), ?, ?, ?);",
+                        cpuEmUso, componente.getIdComponente(), componente.getFkMaquina());
+                // INSERT DA CPU DOCKER
+                conexaoMysql.update("INSERT INTO Log (momentoCaptura, emUso, fkComponente, fkMaquina) VALUES (CURRENT_TIMESTAMP, ?, ?, null);",
+                        cpuEmUso, componente.getIdComponente());
+            } else {
+                //INSERT DO DISCO AZURE
+                conexaoAzure.update("INSERT INTO Log (momentoCaptura, emUso, fkComponente, fkMaquina) VALUES (GETDATE(), ?, ?, ?);",
+                        cpuEmUso, componente.getIdComponente(), componente.getFkMaquina());
+            }
         } else if (componente.getNomeComponente().equalsIgnoreCase("Memória RAM")) {
             //Inserindo o emUso da RAM na tabela Log
             Double ramEmUso = memoria.getEmUso() / Math.pow(10, 9);
-            //INSERT DO DISCO AZURE
-            conexaoAzure.update("INSERT INTO Log (momentoCaptura, emUso, fkComponente, fkMaquina) VALUES (GETDATE(), ?, ?, ?);",
-                    ramEmUso, componente.getIdComponente(), componente.getFkMaquina());
-            //INSERT DA RAM DOCKER
-            conexaoMysql.update("INSERT INTO Log (momentoCaptura, emUso, fkComponente, fkMaquina) VALUES (CURRENT_TIMESTAMP, ?, ?, null);",
-                    ramEmUso, componente.getIdComponente());
+            
+            if(looca.getSistema().getFabricante().contains("Linux")) {
+                //INSERT DO DISCO AZURE
+                conexaoAzure.update("INSERT INTO Log (momentoCaptura, emUso, fkComponente, fkMaquina) VALUES (GETDATE(), ?, ?, ?);",
+                        ramEmUso, componente.getIdComponente(), componente.getFkMaquina());
+                //INSERT DA RAM DOCKER
+                conexaoMysql.update("INSERT INTO Log (momentoCaptura, emUso, fkComponente, fkMaquina) VALUES (CURRENT_TIMESTAMP, ?, ?, null);",
+                        ramEmUso, componente.getIdComponente());
+            } else {
+                //INSERT DO DISCO AZURE
+                conexaoAzure.update("INSERT INTO Log (momentoCaptura, emUso, fkComponente, fkMaquina) VALUES (GETDATE(), ?, ?, ?);",
+                        ramEmUso, componente.getIdComponente(), componente.getFkMaquina());
+            }
         } else if (componente.getNomeComponente().equalsIgnoreCase("Disco Rígido")) {
             for (int i = 0; i < discos.size(); i++) {
                 if (discos.get(i).getModelo().equalsIgnoreCase(componente.getModelo())) {
                     Volume volume = volumes.get(i);
                     Double discoEmUso = (volume.getTotal() - volume.getDisponivel()) / Math.pow(10, 9);
-
-                    //INSERT DO DISCO AZURE
-                    conexaoAzure.update("INSERT INTO Log (momentoCaptura, emUso, fkComponente, fkMaquina) VALUES (GETDATE(), ?, ?, ?);",
-                            discoEmUso, componente.getIdComponente(), componente.getFkMaquina());
-                    //INSERT DO DISCO DOCKER
-                    conexaoMysql.update("INSERT INTO Log (momentoCaptura, emUso, fkComponente, fkMaquina) VALUES (CURRENT_TIMESTAMP, ?, ?, null);",
-                            discoEmUso, componente.getIdComponente());
+                    
+                    if(looca.getSistema().getFabricante().contains("Linux")) {
+                        //INSERT DO DISCO AZURE
+                        conexaoAzure.update("INSERT INTO Log (momentoCaptura, emUso, fkComponente, fkMaquina) VALUES (GETDATE(), ?, ?, ?);",
+                                discoEmUso, componente.getIdComponente(), componente.getFkMaquina());
+                        //INSERT DO DISCO DOCKER
+                        conexaoMysql.update("INSERT INTO Log (momentoCaptura, emUso, fkComponente, fkMaquina) VALUES (CURRENT_TIMESTAMP, ?, ?, null);",
+                                discoEmUso, componente.getIdComponente());                        
+                    } else {
+                        //INSERT DO DISCO AZURE
+                        conexaoAzure.update("INSERT INTO Log (momentoCaptura, emUso, fkComponente, fkMaquina) VALUES (GETDATE(), ?, ?, ?);",
+                                discoEmUso, componente.getIdComponente(), componente.getFkMaquina());
+                    }
                 }
             }
         }
-        
         System.out.println(String.format("Dados inseridos para o componente %s", componente.getNomeComponente()));
-
-//        //Inserindo o emUso do Disco na tabela Log
-//        for (int i = 0; i < discos.size(); i++) {
-//            Volume volume = volumes.get(i);
-//            Double discoEmUso = (volume.getTotal() - volume.getDisponivel()) / Math.pow(10, 9);
-//
-//            //INSERT DO DISCO AZURE
-//            conexaoAzure.update("INSERT INTO Log (momentoCaptura, emUso, fkComponente, fkNivelAlerta, fkMaquina, fkGestor) VALUES (?, ?, ?, ?, ?, ?);",
-//                    LocalDateTime.now(), discoEmUso, fkComponente, fkNivelAlerta, fkMaquina, fkGestor);
-//            //INSERT DO DISCO DOCKER
-//            conexaoMysql.update("INSERT INTO Log (momentoCaptura, emUso, fkComponente, fkNivelAlerta, fkMaquina, fkGestor) VALUES (?, ?, ?, ?, ?, ?);",
-//                    LocalDateTime.now(), discoEmUso, fkComponente, fkNivelAlerta, fkMaquina, fkGestor);
-//        }
-//
-//        //Inserindo o emUso da CPU na tabela Log
-//        Double cpuEmUso = cpu.getUso();
-//        //INSERT DO DISCO AZURE
-//        conexaoAzure.update("INSERT INTO Log (momentoCaptura, emUso, fkComponente, fkNivelAlerta, fkMaquina, fkGestor) VALUES (?, ?, ?, ?, ?, ?);",
-//                LocalDateTime.now(), cpuEmUso, fkComponente, fkNivelAlerta, fkMaquina, fkGestor);
-//        //INSERT DO DISCO DOCKER
-//        conexaoMysql.update("INSERT INTO Log (momentoCaptura, emUso, fkComponente, fkNivelAlerta, fkMaquina, fkGestor) VALUES (?, ?, ?, ?, ?, ?);",
-//                LocalDateTime.now(), cpuEmUso, fkComponente, fkNivelAlerta, fkMaquina, fkGestor);
-//
-//        //Inserindo o emUso da RAM na tabela Log
-//        Double ramEmUso = memoria.getEmUso() / Math.pow(10, 9);
-//        //INSERT DO DISCO AZURE
-//        conexaoAzure.update("INSERT INTO Log (momentoCaptura, emUso, fkComponente, fkNivelAlerta, fkMaquina, fkGestor) VALUES (?, ?, ?, ?, ?, ?);",
-//                LocalDateTime.now(), ramEmUso, fkComponente, fkNivelAlerta, fkMaquina, fkGestor);
-//        //INSERT DO DISCO DOCKER
-//        conexaoMysql.update("INSERT INTO Log (momentoCaptura, emUso, fkComponente, fkNivelAlerta, fkMaquina, fkGestor) VALUES (?, ?, ?, ?, ?, ?);",
-//                LocalDateTime.now(), ramEmUso, fkComponente, fkNivelAlerta, fkMaquina, fkGestor);
     }
-
 }

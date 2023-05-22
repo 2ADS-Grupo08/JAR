@@ -19,7 +19,6 @@ import tabelas.Maquina;
 public class Login extends javax.swing.JFrame {
 
     private static JdbcTemplate jdbcAzure;
-    private static JdbcTemplate jdbcMysql;
     private static Looca looca;
 
     public Login() {
@@ -27,9 +26,7 @@ public class Login extends javax.swing.JFrame {
         
         //Iniciando uma nova conexão
         Conexao conexaoAzure = new Conexao("azure");
-        Conexao conexaoMysql = new Conexao("mysql");
         jdbcAzure = conexaoAzure.getConnection();
-        jdbcMysql = conexaoMysql.getConnection();
 
         //Conectando com o Looca
         looca = new Looca();
