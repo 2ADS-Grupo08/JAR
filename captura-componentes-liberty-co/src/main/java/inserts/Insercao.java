@@ -155,8 +155,4 @@ public class Insercao {
         }
         System.out.println(String.format("Dados inseridos para o componente %s", componente.getNomeComponente()));
     }
-
-//    public static void inserirDadosJanelaEncerrada() {
-//        
-//    }
 }

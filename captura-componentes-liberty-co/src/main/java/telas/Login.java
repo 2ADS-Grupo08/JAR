@@ -6,24 +6,70 @@ package telas;
 
 import captura.Conexao;
 import com.github.britooo.looca.api.core.Looca;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import tabelas.Maquina;
-
+import java.util.logging.Logger;
+import java.nio.file.Path;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.FileHandler;
+import java.util.logging.Formatter;
+import java.util.logging.Level;
+import java.util.logging.LogRecord;
+import java.util.logging.Logger;
 /**
  *
  * @author mari
  */
+import java.util.logging.FileHandler;
+
 public class Login extends javax.swing.JFrame {
 
     private static JdbcTemplate jdbcAzure;
     private static Looca looca;
 
+    private static final Logger logger = Logger.getLogger(Login.class.getName());
+
+    public static void logFormatacao() throws IOException {
+        Date date = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        String dataFormatada = dateFormat.format(date);
+
+        Path pathW = Paths.get("C:/Users/Daniel Dias/Desktop/logsdologin");
+        if (!Files.exists(pathW)) {
+            Files.createDirectory(pathW);
+        }
+
+        FileHandler fileHandler = new FileHandler(String.format("C:/Users/Daniel Dias/Desktop/logsdologin/%s.txt", dataFormatada));
+        fileHandler.setFormatter(new Formatter() {
+            private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd >> HH:mm:ss");
+
+            public String format(LogRecord record) {
+                StringBuilder builder = new StringBuilder();
+                builder.append(dateFormat.format(new Date())).append(" ");
+                builder.append(record.getLevel()).append(": ");
+                builder.append(record.getMessage()).append(" (");
+                builder.append(record.getSourceClassName()).append(".");
+                builder.append(record.getSourceMethodName()).append(")");
+                builder.append(System.lineSeparator());
+                return builder.toString();
+            }
+        }
+        );
+        logger.addHandler(fileHandler);
+        logger.setLevel(Level.ALL);
+    }
+
     public Login() {
         initComponents();
-        
+
         //Iniciando uma nova conexão
         Conexao conexaoAzure = new Conexao("azure");
         jdbcAzure = conexaoAzure.getConnection();
@@ -121,25 +167,20 @@ public class Login extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, gradiente1Layout.createSequentialGroup()
                         .addGroup(gradiente1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(gradiente1Layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(26, 26, 26))
-                            .addGroup(gradiente1Layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addGap(18, 18, 18))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, gradiente1Layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                        .addGroup(gradiente1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txt_sobrenome)
-                            .addComponent(txt_hostname)
-                            .addComponent(txt_nome, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(gradiente1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel2))
+                                .addGap(18, 18, 18)
+                                .addGroup(gradiente1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txt_sobrenome)
+                                    .addComponent(txt_hostname)
+                                    .addComponent(txt_nome, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel1))
                         .addGap(181, 181, 181))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, gradiente1Layout.createSequentialGroup()
                         .addComponent(bt_entrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(319, 319, 319))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, gradiente1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(199, 199, 199))))
+                        .addGap(319, 319, 319))))
         );
         gradiente1Layout.setVerticalGroup(
             gradiente1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -147,17 +188,19 @@ public class Login extends javax.swing.JFrame {
                 .addGap(51, 51, 51)
                 .addComponent(jLabel1)
                 .addGap(37, 37, 37)
-                .addGroup(gradiente1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txt_nome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addGap(18, 18, 18)
-                .addGroup(gradiente1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txt_sobrenome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
-                .addGap(18, 18, 18)
-                .addGroup(gradiente1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txt_hostname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
+                .addGroup(gradiente1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(gradiente1Layout.createSequentialGroup()
+                        .addComponent(txt_nome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(txt_sobrenome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(txt_hostname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(gradiente1Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel3)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel4)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
                 .addComponent(bt_entrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(51, 51, 51))
@@ -211,7 +254,7 @@ public class Login extends javax.swing.JFrame {
 
     private void bt_entrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_entrarActionPerformed
         TelaCaptura telaCaptura = new TelaCaptura();
-        
+
         String nome = txt_nome.getText();
         String sobrenome = txt_sobrenome.getText();
         String hostName = txt_hostname.getText();
@@ -219,15 +262,18 @@ public class Login extends javax.swing.JFrame {
         List<Maquina> maquinas = new ArrayList<>();
 
         String hostNamePc = looca.getRede().getParametros().getHostName();
-        maquinas = jdbcAzure.query("SELECT * FROM Maquina WHERE hostName = ?", 
-                new BeanPropertyRowMapper(Maquina.class), hostNamePc);
+        maquinas = jdbcAzure.query("SELECT * FROM Maquina WHERE hostName = ?",
+                new BeanPropertyRowMapper(Maquina.class
+                ), hostNamePc);
 
-        if (maquinas.size() > 0){
-            if ((maquinas.get(0).getNomeDono().equals(nome)) && (maquinas.get(0).getSobrenomeDono().equals(sobrenome)) && (maquinas.get(0).getHostName().equals(hostName))){
+        if (maquinas.size() > 0) {
+            if ((maquinas.get(0).getNomeDono().equals(nome)) && (maquinas.get(0).getSobrenomeDono().equals(sobrenome)) && (maquinas.get(0).getHostName().equals(hostName))) {
                 telaCaptura.main(new String[]{});
                 dispose();
+                logger.info("Login realizado por " + txt_nome + " efetuado com sucesso!!");
             } else {
                 System.out.println("Não encontrado");
+                logger.severe("Login realizado por " + txt_nome + " falhou!!");
             }
         };
     }//GEN-LAST:event_bt_entrarActionPerformed
@@ -235,7 +281,7 @@ public class Login extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String args[]) throws IOException {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -249,13 +295,17 @@ public class Login extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Login.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Login.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Login.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Login.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -265,6 +315,7 @@ public class Login extends javax.swing.JFrame {
                 new Login().setVisible(true);
             }
         });
+        logFormatacao();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
