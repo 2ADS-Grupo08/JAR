@@ -7,6 +7,8 @@ echo "| |___| | |_) |  __/ |  | |_| |_| | | |__| (_) | "
 echo "|_____|_|_.__/ \___|_|   \__|\__, |  \____\___/  " 
 echo "                             |___/               "
 
+sleep 3
+clear
 
 echo -e "[Liberty-assistant]: Olá, serei seu assistente para instalação do Java, docker e MYSQL!!!"
 sleep 3
@@ -29,6 +31,8 @@ if [ $? -eq 0 ]
 
 		echo -e "[Liberty-assistant]: E essa é a sua atual versão:"
 		java -version
+		sleep 3
+		clear
 	else
 		echo -e"[Liberty-assistant]:  Opa! Não identifiquei nenhuma versão do Java instalado, mas sem problemas, irei resolver isso agora!"
 		echo -e "[Liberty-assistant]:  Confirme para se realmente deseja instalar o Java (S/N)?"
@@ -44,7 +48,6 @@ if [ $? -eq 0 ]
 						clear
 						echo -e "[Liberty-assistant]: Java instalado com sucesso!"
                 				echo -e "    "
-
 					else
 						echo -e "[Liberty-assistant]: A versão atual do Java é menor que 17. Deseja atualizá-la (S/N)?"
 						read atualizar
@@ -64,8 +67,6 @@ fi
 
 
 sleep 2
-echo -e "    "
-echo -e "    "
 
 echo -e "[Liberty-assistant]: Verificando se você possui o Docker instalado..."
 sleep 2
@@ -80,6 +81,9 @@ if [ $? -eq 0 ]
 		sleep 1
 		sudo systemctl start docker
 		sudo systemctl enable docker
+		
+		sleep 3
+		clear
 
 		echo -e "[Liberty-assistant]: E essa é a versão atual do docker:"
 		docker --version
@@ -115,8 +119,9 @@ if [ $? -eq 0 ]
         then
                 echo -e "[Liberty-assistant]: Você já tem o MySQL instalado!!!"
 		echo -e "    "
-
- 		sleep 1
+                echo -e "[Liberty-assistant]: A versão da imagem SQL é 5.7"
+ 		sleep 3
+ 		clear
         else
                 echo -e"[Liberty-assistant]: Opa! Não identifiquei nenhuma versão do MySQL instalado, mas sem problemas, irei resolver isso agora!"
                 echo -e "[Liberty-assistant]: Confirme para se realmente deseja instalar o MySQL (S/N)?"
@@ -133,6 +138,8 @@ if [ $? -eq 0 ]
                                 echo -e "\n"
                                 sudo apt update && sudo apt upgrade –y
                                 echo -e "[Liberty-assistant]: Obrigado pela paciência! Aproveite nossas ferramentas!"
+                                sleep 3
+                                clear
                 fi
 fi
 	sleep 3
@@ -140,7 +147,7 @@ fi
 	echo -e "[Liberty-assistant]: Vamos criar uma imagem do banco de dados MYSQL."
         echo -e "    "
         echo -e "    "
-
+	sleep 1
 
 if [ $( sudo docker ps -a | grep liberty-co | wc -l ) -gt 0 ];
 	then
@@ -223,11 +230,17 @@ echo -e "[Liberty-assistant]: Agora foram criados os bancos em sua máquina, o m
         echo -e "    "
 sleep 3
 
-wget https://github.com/2ADS-Grupo08/JAR/raw/main/captura-componentes-liberty-co/target/captura-componentes-liberty-co-1.0-SNAPSHOT-jar-with-dependencies.jar
-
-        echo -e "    "
-        echo -e "    "
-
+if [ -f "captura-componentes-liberty-co-1.0-SNAPSHOT-jar-with-dependencies.jar" ];
+	then
+		echo -e "Visto que já possuí o arquivo baixado, não iremos baixar novamente"
+		sleep 2
+	else
+		wget https://github.com/2ADS-Grupo08/JAR/raw/main/captura-componentes-liberty-co/target/captura-componentes-liberty-co-1.0-SNAPSHOT-jar-with-dependencies.jar
+		echo -e "Baixado o arquivo, aguarde para execução!"
+		echo -e "    "
+		echo -e "    "
+		sleep 2
+fi
 echo -e "[Liberty-assistant]: As dependencias foram baixados, iremos executar e peço que não encerre sua máquina"
 
 java -jar captura-componentes-liberty-co-1.0-SNAPSHOT-jar-with-dependencies.jar
