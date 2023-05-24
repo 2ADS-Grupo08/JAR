@@ -47,7 +47,7 @@ public class Login extends javax.swing.JFrame {
             Files.createDirectory(pathW);
         }
 
-        FileHandler fileHandler = new FileHandler(String.format("C:/Users/Daniel Dias/Desktop/logsdologin/%s.txt", dataFormatada));
+        FileHandler fileHandler = new FileHandler(String.format("C:/Users/Daniel Dias/Desktop/logsdologin/%s.txt", dataFormatada),true);
         fileHandler.setFormatter(new Formatter() {
             private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd >> HH:mm:ss");
 
@@ -270,10 +270,10 @@ public class Login extends javax.swing.JFrame {
             if ((maquinas.get(0).getNomeDono().equals(nome)) && (maquinas.get(0).getSobrenomeDono().equals(sobrenome)) && (maquinas.get(0).getHostName().equals(hostName))) {
                 telaCaptura.main(new String[]{});
                 dispose();
-                logger.info("Login realizado por " + txt_nome + " efetuado com sucesso!!");
+                logger.info("Login realizado por " + nome + " efetuado com sucesso!!");
             } else {
                 System.out.println("Não encontrado");
-                logger.severe("Login realizado por " + txt_nome + " falhou!!");
+                logger.severe("Login realizado por " + nome + " falhou!!");
             }
         };
     }//GEN-LAST:event_bt_entrarActionPerformed
@@ -316,6 +316,7 @@ public class Login extends javax.swing.JFrame {
             }
         });
         logFormatacao();
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
