@@ -1,5 +1,5 @@
 #!/bin/bash
-
+clear
 echo " _     _ _               _            ____       "      
 echo "| |   (_) |__   ___ _ __| |_ _   _   / ___|___   "  
 echo "| |   | | '_ \ / _ \ '__| __| | | | | |   / _ \  " 
@@ -40,31 +40,14 @@ if [ $? -eq 0 ]
 		if [ \"$inst\" == \"S\" ]
 			then
 				echo -e "[Liberty-assistant]:  Ok! Você escolheu instalar o Java"
-
-				if [ $VERSAO -e 17 ]
-					then
-						echo -e "[Liberty-assistant]: Preparando para instalar a versão 17 do Java. Confirme a instalação quando solicitado"
-						sudo apt install openjdk-17-jdk openjdk-17-jre-y openjdk-17 openjdk-17-jdk-headless;
-						clear
-						echo -e "[Liberty-assistant]: Java instalado com sucesso!"
-                				echo -e "    "
-					else
-						echo -e "[Liberty-assistant]: A versão atual do Java é menor que 17. Deseja atualizá-la (S/N)?"
-						read atualizar
-
-						if [ \"$atualizar\" == \"S\" ]
-							then
-								echo -e "[Liberty-assistant]: Atualizando Java para a versão 17. Confirme a instalação quando solicitado."
-								sudo apt install openjdk-17-jdk openjdk-17-jre-y openjdk-17 openjdk-17-jdk-headless;
-								clear
-								echo -e "[Liberty-assistant]: Java atualizado com sucesso!"
-							else
-							echo -e "[Liberty-assistant]: A versão atual do Java não atende aos requisitos mínimos. Atualize o Java para a versão 17 ou superior para continuar."
-						fi
-				fi
-		fi
+				echo -e "[Liberty-assistant]: Atualizando Java para a versão 17. Confirme a instalação quando solicitado."
+				sudo apt install openjdk-17-jdk -y;
+				clear
+				echo -e "[Liberty-assistant]: Java atualizado com sucesso!"
+				else
+				echo -e "[Liberty-assistant]: A versão atual do Java não atende aos requisitos mínimos. Atualize o Java para a versão 17 ou superior para continuar."
+	fi
 fi
-
 
 sleep 2
 
@@ -123,12 +106,12 @@ if [ $? -eq 0 ]
  		sleep 3
  		clear
         else
-                echo -e"[Liberty-assistant]: Opa! Não identifiquei nenhuma versão do MySQL instalado, mas sem problemas, irei resolver isso agora!"
-                echo -e "[Liberty-assistant]: Confirme para se realmente deseja instalar o MySQL (S/N)?"
+                echo -e"[Liberty-assistant]: Opa! Não identifiquei nenhuma versão da imagem do MySQL instalado, mas sem problemas, irei resolver isso agora!"
+                echo -e "[Liberty-assistant]: Confirme para se realmente deseja instalar a imagem MySQL (S/N)?"
         read inst
                 if [ \"$inst\" == \"S\" ]
                         then
-                                echo -e "[Liberty-assistant]: Ok! Você escolheu instalar o MySQL"
+                                echo -e "[Liberty-assistant]: Ok! Você escolheu instalar a imagem MySQL"
                                 echo -e "[Liberty-assistant]: Realizando download!"
                                 sleep 2
 				sudo docker pull mysql:5.7
