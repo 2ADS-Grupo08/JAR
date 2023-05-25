@@ -115,6 +115,7 @@ public class Login extends javax.swing.JFrame {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel2.setText("Nome:");
 
+        txt_nome.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txt_nome.setActionCommand("<Not Set>");
         txt_nome.setAutoscrolls(false);
         txt_nome.addActionListener(new java.awt.event.ActionListener() {
@@ -129,6 +130,7 @@ public class Login extends javax.swing.JFrame {
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel3.setText("Sobrenome:");
 
+        txt_sobrenome.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txt_sobrenome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_sobrenomeActionPerformed(evt);
@@ -141,6 +143,7 @@ public class Login extends javax.swing.JFrame {
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel4.setText("HostName:");
 
+        txt_hostname.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txt_hostname.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_hostnameActionPerformed(evt);
@@ -167,40 +170,43 @@ public class Login extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, gradiente1Layout.createSequentialGroup()
                         .addGroup(gradiente1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(gradiente1Layout.createSequentialGroup()
-                                .addGroup(gradiente1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel2))
-                                .addGap(18, 18, 18)
-                                .addGroup(gradiente1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txt_sobrenome)
-                                    .addComponent(txt_hostname)
-                                    .addComponent(txt_nome, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jLabel1))
+                                .addComponent(jLabel4)
+                                .addGap(26, 26, 26))
+                            .addGroup(gradiente1Layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addGap(18, 18, 18))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, gradiente1Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                        .addGroup(gradiente1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txt_sobrenome)
+                            .addComponent(txt_hostname)
+                            .addComponent(txt_nome, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(181, 181, 181))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, gradiente1Layout.createSequentialGroup()
                         .addComponent(bt_entrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(319, 319, 319))))
+                        .addGap(319, 319, 319))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, gradiente1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(203, 203, 203))))
         );
         gradiente1Layout.setVerticalGroup(
             gradiente1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(gradiente1Layout.createSequentialGroup()
-                .addGap(51, 51, 51)
+                .addGap(54, 54, 54)
                 .addComponent(jLabel1)
-                .addGap(37, 37, 37)
-                .addGroup(gradiente1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(gradiente1Layout.createSequentialGroup()
-                        .addComponent(txt_nome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(txt_sobrenome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(txt_hostname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(gradiente1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel3)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel4)))
+                .addGap(34, 34, 34)
+                .addGroup(gradiente1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_nome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addGap(18, 18, 18)
+                .addGroup(gradiente1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_sobrenome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addGap(18, 18, 18)
+                .addGroup(gradiente1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_hostname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
                 .addComponent(bt_entrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(51, 51, 51))
