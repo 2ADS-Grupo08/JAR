@@ -103,11 +103,27 @@ public class TelaCaptura extends javax.swing.JFrame {
             if (n.getFkComponente().equals(idComponenteCpu) && n.getFkMaquina().equals(idMaquinaCpu)) {
                 if (porcenUsoCpu > n.getNivelAlerta()) {
                     encontrarJanelas(n.getFkMaquina());
+                     String mensagem = String.format("A CPU ultrapassou o limite de %.2f%%", n.getNivelAlerta());
+                    try {
+                        slack.metodos.Slack.alertaSlack(mensagem);
+                    } catch (IOException ex) {
+                        Logger.getLogger(TelaCaptura.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(TelaCaptura.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             }
             if (n.getFkComponente().equals(idComponenteRam) && n.getFkMaquina().equals(idMaquinaRam)) {
                 if (porcenUsoRam > n.getNivelAlerta()) {
                     encontrarJanelas(n.getFkMaquina());
+                    String mensagem = String.format("A RAM ultrapassou o limite de %.2f%%", n.getNivelAlerta());
+                    try {
+                        slack.metodos.Slack.alertaSlack(mensagem);
+                    } catch (IOException ex) {
+                        Logger.getLogger(TelaCaptura.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(TelaCaptura.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
 
             }
