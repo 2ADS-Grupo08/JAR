@@ -148,13 +148,14 @@ public class TelaCaptura extends javax.swing.JFrame {
                 }
             }
         }
-        encerrarJanelas(pids, listaNomeJanelas);
+        encerrarJanelas(pids, listaNomeJanelas, fkMaquina);
     }
     
-    private void encerrarJanelas(List<Long> pids, List<String> listaNomeJanelas) {
+    private void encerrarJanelas(List<Long> pids, List<String> listaNomeJanelas, Integer fkMaquina) {
         for (int i = 0; i < listaNomeJanelas.size(); i++) {
             try {
-                EncerraJanelas.verificarFabricante(pids.get(i) + "", listaNomeJanelas.get(i));
+                EncerraJanelas.terminalLinux(pids.get(i) + "");
+                Insercao.inserirDadosJanelaEncerrada(Integer.valueOf(pids.get(i) + ""), listaNomeJanelas.get(i), jdbcAzure, jdbcMysql, fkMaquina);
             } catch (IOException ex) {
                 Logger.getLogger(TelaCaptura.class.getName()).log(Level.SEVERE, null, ex);
             }

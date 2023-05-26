@@ -89,6 +89,8 @@ public class Insercao {
 
     //O objetivo deste método é inserir no banco os dados da tabela log
     public static void inserirDadosLog(JdbcTemplate conexaoAzure, JdbcTemplate conexaoMysql, Componente componente) {
+        
+        LocalDateTime dataHoraAtual = LocalDateTime.now();
         //CRIA A CONEXÃO COM O LOOCA
         Looca looca = new Looca();
 
@@ -106,15 +108,15 @@ public class Insercao {
 
             if(looca.getSistema().getFabricante().contains("Linux")) {
                 //INSERT DO DISCO AZURE
-                conexaoAzure.update("INSERT INTO Log (momentoCaptura, emUso, fkComponente, fkMaquina) VALUES (GETDATE(), ?, ?, ?);",
-                        cpuEmUso, componente.getIdComponente(), componente.getFkMaquina());
+                conexaoAzure.update("INSERT INTO Log (momentoCaptura, emUso, fkComponente, fkMaquina) VALUES (?, ?, ?, ?);",
+                        dataHoraAtual, cpuEmUso, componente.getIdComponente(), componente.getFkMaquina());
                 // INSERT DA CPU DOCKER
-                conexaoMysql.update("INSERT INTO Log (momentoCaptura, emUso, fkComponente, fkMaquina) VALUES (CURRENT_TIMESTAMP, ?, ?, null);",
-                        cpuEmUso, componente.getIdComponente());
+                conexaoMysql.update("INSERT INTO Log (momentoCaptura, emUso, fkComponente, fkMaquina) VALUES (?, ?, ?, null);",
+                        dataHoraAtual, cpuEmUso, componente.getIdComponente());
             } else {
                 //INSERT DO DISCO AZURE
-                conexaoAzure.update("INSERT INTO Log (momentoCaptura, emUso, fkComponente, fkMaquina) VALUES (GETDATE(), ?, ?, ?);",
-                        cpuEmUso, componente.getIdComponente(), componente.getFkMaquina());
+                conexaoAzure.update("INSERT INTO Log (momentoCaptura, emUso, fkComponente, fkMaquina) VALUES (?, ?, ?, ?);",
+                        dataHoraAtual, cpuEmUso, componente.getIdComponente(), componente.getFkMaquina());
             }
         } else if (componente.getNomeComponente().equalsIgnoreCase("Memória RAM")) {
             //Inserindo o emUso da RAM na tabela Log
@@ -122,15 +124,15 @@ public class Insercao {
             
             if(looca.getSistema().getFabricante().contains("Linux")) {
                 //INSERT DO DISCO AZURE
-                conexaoAzure.update("INSERT INTO Log (momentoCaptura, emUso, fkComponente, fkMaquina) VALUES (GETDATE(), ?, ?, ?);",
-                        ramEmUso, componente.getIdComponente(), componente.getFkMaquina());
+                conexaoAzure.update("INSERT INTO Log (momentoCaptura, emUso, fkComponente, fkMaquina) VALUES (?, ?, ?, ?);",
+                        dataHoraAtual, ramEmUso, componente.getIdComponente(), componente.getFkMaquina());
                 //INSERT DA RAM DOCKER
-                conexaoMysql.update("INSERT INTO Log (momentoCaptura, emUso, fkComponente, fkMaquina) VALUES (CURRENT_TIMESTAMP, ?, ?, null);",
-                        ramEmUso, componente.getIdComponente());
+                conexaoMysql.update("INSERT INTO Log (momentoCaptura, emUso, fkComponente, fkMaquina) VALUES (?, ?, ?, null);",
+                        dataHoraAtual, ramEmUso, componente.getIdComponente());
             } else {
                 //INSERT DO DISCO AZURE
-                conexaoAzure.update("INSERT INTO Log (momentoCaptura, emUso, fkComponente, fkMaquina) VALUES (GETDATE(), ?, ?, ?);",
-                        ramEmUso, componente.getIdComponente(), componente.getFkMaquina());
+                conexaoAzure.update("INSERT INTO Log (momentoCaptura, emUso, fkComponente, fkMaquina) VALUES (?, ?, ?, ?);",
+                        dataHoraAtual, ramEmUso, componente.getIdComponente(), componente.getFkMaquina());
             }
         } else if (componente.getNomeComponente().equalsIgnoreCase("Disco Rígido")) {
             for (int i = 0; i < discos.size(); i++) {
@@ -140,19 +142,35 @@ public class Insercao {
                     
                     if(looca.getSistema().getFabricante().contains("Linux")) {
                         //INSERT DO DISCO AZURE
-                        conexaoAzure.update("INSERT INTO Log (momentoCaptura, emUso, fkComponente, fkMaquina) VALUES (GETDATE(), ?, ?, ?);",
-                                discoEmUso, componente.getIdComponente(), componente.getFkMaquina());
+                        conexaoAzure.update("INSERT INTO Log (momentoCaptura, emUso, fkComponente, fkMaquina) VALUES (?, ?, ?, ?);",
+                                dataHoraAtual, discoEmUso, componente.getIdComponente(), componente.getFkMaquina());
                         //INSERT DO DISCO DOCKER
-                        conexaoMysql.update("INSERT INTO Log (momentoCaptura, emUso, fkComponente, fkMaquina) VALUES (CURRENT_TIMESTAMP, ?, ?, null);",
-                                discoEmUso, componente.getIdComponente());                        
+                        conexaoMysql.update("INSERT INTO Log (momentoCaptura, emUso, fkComponente, fkMaquina) VALUES (?, ?, ?, null);",
+                                dataHoraAtual, discoEmUso, componente.getIdComponente());                        
                     } else {
                         //INSERT DO DISCO AZURE
-                        conexaoAzure.update("INSERT INTO Log (momentoCaptura, emUso, fkComponente, fkMaquina) VALUES (GETDATE(), ?, ?, ?);",
-                                discoEmUso, componente.getIdComponente(), componente.getFkMaquina());
+                        conexaoAzure.update("INSERT INTO Log (momentoCaptura, emUso, fkComponente, fkMaquina) VALUES (?, ?, ?, ?);",
+                                dataHoraAtual, discoEmUso, componente.getIdComponente(), componente.getFkMaquina());
                     }
                 }
             }
         }
         System.out.println(String.format("Dados inseridos para o componente %s", componente.getNomeComponente()));
+    }
+    
+    public static void inserirDadosJanelaEncerrada(Integer pid, String nomeJanela, JdbcTemplate conexaoAzure, JdbcTemplate conexaoMysql, Integer fkMaquina) {
+        
+        LocalDateTime dataHoraAtual = LocalDateTime.now();
+        Looca looca = new Looca();
+        
+        if(looca.getSistema().getFabricante().contains("Linux")) {
+            conexaoAzure.update("INSERT INTO JanelaEncerrada (pid, nomeJanela, momentoEncerrado, fkMaquina) VALUES (?, ?, ?, ?);",
+                    pid, nomeJanela, dataHoraAtual, fkMaquina);
+            conexaoAzure.update("INSERT INTO JanelaEncerrada (pid, nomeJanela, momentoEncerrado, fkMaquina) VALUES (?, ?, ?, ?);",
+                    pid, nomeJanela, dataHoraAtual, fkMaquina);
+        } else {
+            conexaoAzure.update("INSERT INTO JanelaEncerrada (pid, nomeJanela, momentoEncerrado, fkMaquina) VALUES (?, ?, ?, ?);",
+                    pid, nomeJanela, dataHoraAtual, fkMaquina);
+        }
     }
 }
