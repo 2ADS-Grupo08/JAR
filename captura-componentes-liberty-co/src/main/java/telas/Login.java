@@ -48,6 +48,7 @@ public class Login extends javax.swing.JFrame {
         }
 
         FileHandler fileHandler = new FileHandler(String.format("C:/Users/Daniel Dias/Desktop/logsdologin/%s.txt", dataFormatada),true);
+        
         fileHandler.setFormatter(new Formatter() {
             private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd >> HH:mm:ss");
 

@@ -53,7 +53,7 @@ public class Insercao {
 
         //Inserindo o CPU na tabela Componente
         String modeloCpu = cpu.getNome();
-        Double totalCpu = cpu.getFrequencia() / Math.pow(10, 9);
+        Double totalCpu = 100.0;
         
         if(looca.getSistema().getFabricante().contains("Linux")) {
             //INSERT DA CPU AZURE
