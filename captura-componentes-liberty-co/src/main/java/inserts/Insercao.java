@@ -11,7 +11,6 @@ import com.github.britooo.looca.api.group.discos.Volume;
 import com.github.britooo.looca.api.group.memoria.Memoria;
 import com.github.britooo.looca.api.group.processador.Processador;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.jdbc.core.JdbcTemplate;
 import tabelas.Componente;
@@ -89,7 +88,6 @@ public class Insercao {
 
     //O objetivo deste método é inserir no banco os dados da tabela log
     public static void inserirDadosLog(JdbcTemplate conexaoAzure, JdbcTemplate conexaoMysql, Componente componente) {
-        
         LocalDateTime dataHoraAtual = LocalDateTime.now();
         //CRIA A CONEXÃO COM O LOOCA
         Looca looca = new Looca();
@@ -159,14 +157,13 @@ public class Insercao {
     }
     
     public static void inserirDadosJanelaEncerrada(Integer pid, String nomeJanela, JdbcTemplate conexaoAzure, JdbcTemplate conexaoMysql, Integer fkMaquina) {
-        
         LocalDateTime dataHoraAtual = LocalDateTime.now();
         Looca looca = new Looca();
         
         if(looca.getSistema().getFabricante().contains("Linux")) {
             conexaoAzure.update("INSERT INTO JanelaEncerrada (pid, nomeJanela, momentoEncerrado, fkMaquina) VALUES (?, ?, ?, ?);",
                     pid, nomeJanela, dataHoraAtual, fkMaquina);
-            conexaoAzure.update("INSERT INTO JanelaEncerrada (pid, nomeJanela, momentoEncerrado, fkMaquina) VALUES (?, ?, ?, ?);",
+            conexaoMysql.update("INSERT INTO JanelaEncerrada (pid, nomeJanela, momentoEncerrado, fkMaquina) VALUES (?, ?, ?, ?);",
                     pid, nomeJanela, dataHoraAtual, fkMaquina);
         } else {
             conexaoAzure.update("INSERT INTO JanelaEncerrada (pid, nomeJanela, momentoEncerrado, fkMaquina) VALUES (?, ?, ?, ?);",
