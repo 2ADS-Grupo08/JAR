@@ -151,22 +151,23 @@ if [ $( sudo docker ps -a | grep liberty-co | wc -l ) -gt 0 ];
 		sudo docker exec -it liberty-co mysql -u root -p#Gfgrupo8 -e "USE liberty-co;
 CREATE TABLE  IF NOT EXISTS Instituicao (
 	idInstituicao INT PRIMARY KEY AUTO_INCREMENT,
-    razaoSoc VARCHAR(120),
+    razao_social VARCHAR(120),
     cnpj VARCHAR(14),
-    email VARCHAR(100),
     cep VARCHAR(8),
     numero INT,
     complemento VARCHAR(10),
-    token VARCHAR(6),
+    email VARCHAR(100),
     senha VARCHAR(45)
 );
 CREATE TABLE IF NOT EXISTS Gestor (
 	idGestor INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(45),
-    ultimoNome VARCHAR (45),
+    sobrenome VARCHAR (45),
+    cpf varchar(9),
     cargo VARCHAR(25),
     email VARCHAR(45),
     senha VARCHAR(45),
+    status varchar(45),
     fkInstituicao INT, FOREIGN KEY (fkInstituicao) REFERENCES Instituicao(idInstituicao)
 );
 
@@ -174,17 +175,16 @@ CREATE TABLE IF NOT EXISTS Telefone (
 	idTelefone INT PRIMARY KEY AUTO_INCREMENT,
     numTelefone CHAR(14),
     numCelular CHAR(15),
-    senha VARCHAR(45),
     fkInstituicao INT, FOREIGN KEY (fkInstituicao) REFERENCES Instituicao(idInstituicao),
     fkGestor INT, FOREIGN KEY (fkGestor) REFERENCES Gestor(idGestor)
 );
 CREATE TABLE IF NOT EXISTS Maquina (
 	idMaquina INT PRIMARY KEY AUTO_INCREMENT,
     hostName VARCHAR(45),
-    nomeArq VARCHAR(45),
-    ultimoNomeArq VARCHAR(45),
-    SO VARCHAR(45),
-    status BOOLEAN,	
+    sistemaOperacional VARCHAR(45)
+    nomeDono VARCHAR(45),
+    sobrenomeDono VARCHAR(45),
+    status VARCHAR(45),	
     fkGestor INT, FOREIGN KEY (fkGestor) REFERENCES Gestor(idGestor)
 );
 CREATE TABLE IF NOT EXISTS Processo (
@@ -206,6 +206,19 @@ CREATE TABLE IF NOT EXISTS Log (
 	emUso DECIMAL(6,2),
 	fkComponente INT,
 	fkMaquina INT
+);
+
+CREATE TABLE IF NOT EXISTS Janela (
+	idJanela INT PRIMARY KEY AUTO_INCREMENT,
+	nomeJanela VARCHAR(100),
+	fkMaquina INT, FOREIGN KEY (fkMaquina) REFERENCES Maquina(idMaquina)
+);
+CREATE TABLE IF NOT EXISTS JanelaEncerrada (
+	idJanelaEncerrada INT PRIMARY KEY AUTO_INCREMENT,
+	pid VARCHAR(100),
+	nomeJanela VARCHAR(100),
+	momentoEncerrado DATETIME,
+	fkMaquina INT, FOREIGN KEY (fkMaquina) REFERENCES Maquina(idMaquina)
 );"
 	fi
 
