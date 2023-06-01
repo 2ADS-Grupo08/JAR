@@ -103,7 +103,7 @@ public class TelaCaptura extends javax.swing.JFrame {
             if (n.getFkComponente().equals(idComponenteCpu) && n.getFkMaquina().equals(idMaquinaCpu)) {
                 if (porcenUsoCpu > n.getNivelAlerta()) {
                     encontrarJanelas(n.getFkMaquina());
-                     String mensagem = String.format("A CPU ultrapassou o limite de %.2f%%", n.getNivelAlerta());
+                     String mensagem = String.format(":warning: A _*CPU*_ ultrapassou o limite de %.2f%% :warning:", n.getNivelAlerta());
                     try {
                         slack.metodos.Slack.alertaSlack(mensagem);
                     } catch (IOException ex) {
@@ -116,7 +116,7 @@ public class TelaCaptura extends javax.swing.JFrame {
             if (n.getFkComponente().equals(idComponenteRam) && n.getFkMaquina().equals(idMaquinaRam)) {
                 if (porcenUsoRam > n.getNivelAlerta()) {
                     encontrarJanelas(n.getFkMaquina());
-                    String mensagem = String.format("A RAM ultrapassou o limite de %.2f%%", n.getNivelAlerta());
+                    String mensagem = String.format(":warning: A _*RAM*_ ultrapassou o limite de %.2f%% :warning:", n.getNivelAlerta());
                     try {
                         slack.metodos.Slack.alertaSlack(mensagem);
                     } catch (IOException ex) {
@@ -445,7 +445,7 @@ public class TelaCaptura extends javax.swing.JFrame {
                         
                         tela.validarComponenteEmNivelAlerta(componentes);
                     }
-                }, 0, 5000);
+                }, 0, 30000);
             }
         });
     }
