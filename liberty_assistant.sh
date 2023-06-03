@@ -168,30 +168,30 @@ CREATE TABLE IF NOT EXISTS Gestor (
     email VARCHAR(45),
     senha VARCHAR(45),
     status varchar(45),
-    fkInstituicao INT, FOREIGN KEY (fkInstituicao) REFERENCES Instituicao(idInstituicao)
+    fkInstituicao INT
 );
 
 CREATE TABLE IF NOT EXISTS Telefone (
 	idTelefone INT PRIMARY KEY AUTO_INCREMENT,
     numTelefone CHAR(14),
     numCelular CHAR(15),
-    fkInstituicao INT, FOREIGN KEY (fkInstituicao) REFERENCES Instituicao(idInstituicao),
-    fkGestor INT, FOREIGN KEY (fkGestor) REFERENCES Gestor(idGestor)
+    fkInstituicao INT,
+    fkGestor INT
 );
 CREATE TABLE IF NOT EXISTS Maquina (
 	idMaquina INT PRIMARY KEY AUTO_INCREMENT,
     hostName VARCHAR(45),
-    sistemaOperacional VARCHAR(45)
+    sistemaOperacional VARCHAR(45),
     nomeDono VARCHAR(45),
     sobrenomeDono VARCHAR(45),
     status VARCHAR(45),	
-    fkGestor INT, FOREIGN KEY (fkGestor) REFERENCES Gestor(idGestor)
+    fkGestor INT
 );
 CREATE TABLE IF NOT EXISTS Processo (
 	idProcesso INT PRIMARY KEY AUTO_INCREMENT,
     nomeProcesso VARCHAR(45),
-    fkGestor INT, FOREIGN KEY (fkGestor) REFERENCES Gestor(idGestor),
-    fkMaquina INT, FOREIGN KEY (fkMaquina) REFERENCES Maquina(idMaquina)
+    fkGestor INT,
+    fkMaquina INT
 );
 CREATE TABLE IF NOT EXISTS Componente (
 	idComponente INT PRIMARY KEY AUTO_INCREMENT,
@@ -211,14 +211,14 @@ CREATE TABLE IF NOT EXISTS Log (
 CREATE TABLE IF NOT EXISTS Janela (
 	idJanela INT PRIMARY KEY AUTO_INCREMENT,
 	nomeJanela VARCHAR(100),
-	fkMaquina INT, FOREIGN KEY (fkMaquina) REFERENCES Maquina(idMaquina)
+	fkMaquina INT
 );
 CREATE TABLE IF NOT EXISTS JanelaEncerrada (
 	idJanelaEncerrada INT PRIMARY KEY AUTO_INCREMENT,
 	pid VARCHAR(100),
 	nomeJanela VARCHAR(100),
 	momentoEncerrado DATETIME,
-	fkMaquina INT, FOREIGN KEY (fkMaquina) REFERENCES Maquina(idMaquina)
+	fkMaquina INT
 );"
 	fi
 

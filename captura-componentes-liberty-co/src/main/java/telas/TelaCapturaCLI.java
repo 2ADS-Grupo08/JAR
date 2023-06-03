@@ -164,9 +164,9 @@ public class TelaCapturaCLI {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                TelaCaptura tela = new TelaCaptura();
+//                TelaCaptura tela = new TelaCaptura();
 
-                tela.setVisible(true);
+//                tela.setVisible(true);
 
                 String hostNameMaquina = looca.getRede().getParametros().getHostName();
 

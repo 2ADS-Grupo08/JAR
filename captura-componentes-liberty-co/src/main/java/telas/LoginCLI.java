@@ -35,15 +35,13 @@ import tabelas.Maquina;
  *
  * @author leonardo.prado
  */
-
-
 public class LoginCLI {
-    
+
     private static JdbcTemplate jdbcAzure;
     private static JdbcTemplate jdbcMysql;
     private static Looca looca;
     private static final Logger logger = Logger.getLogger(LoginCLI.class.getName());
-    
+
     public static void logFormatacao() throws IOException {
         Date date = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
@@ -54,8 +52,8 @@ public class LoginCLI {
             Files.createDirectory(pathW);
         }
 
-        FileHandler fileHandler = new FileHandler(String.format("/home/leo/Desktop/JAR/%s.txt", dataFormatada),true);
-        
+        FileHandler fileHandler = new FileHandler(String.format("/home/leo/Desktop/JAR/%s.txt", dataFormatada), true);
+
         fileHandler.setFormatter(new Formatter() {
             private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd >> HH:mm:ss");
 
@@ -74,23 +72,23 @@ public class LoginCLI {
         logger.addHandler(fileHandler);
         logger.setLevel(Level.ALL);
     }
-    
+
     public static void main(String args[]) throws IOException {
-        
-            List<Maquina> maquinas = new ArrayList<>();
-            List<Componente> getFkMaquina = new ArrayList();
-            List<Componente> componentes = new ArrayList();        
-        
+
+        List<Maquina> maquinas = new ArrayList<>();
+        List<Componente> getFkMaquina = new ArrayList();
+        List<Componente> componentes = new ArrayList();
+
         Conexao conexaoAzure = new Conexao("azure");
         Conexao conexaoMysql = new Conexao("mysql");
 
         jdbcAzure = conexaoAzure.getConnection();
         jdbcMysql = conexaoMysql.getConnection();
         looca = new Looca();
-        
-        Scanner scannerNome= new Scanner(System.in);
-        Scanner scannerSobrenome = new Scanner(System.in);        
-        Scanner scannerHostName = new Scanner(System.in); 
+
+        Scanner scannerNome = new Scanner(System.in);
+        Scanner scannerSobrenome = new Scanner(System.in);
+        Scanner scannerHostName = new Scanner(System.in);
         String nome;
         String sobrenome;
         String hostName;
@@ -102,20 +100,17 @@ public class LoginCLI {
         sobrenome = scannerSobrenome.nextLine();
         System.out.println("HostName:");
         hostName = scannerHostName.nextLine();
-        
-
 
         String hostNamePc = looca.getRede().getParametros().getHostName();
         maquinas = jdbcAzure.query("SELECT * FROM Maquina WHERE hostName = ?",
-                new BeanPropertyRowMapper(Maquina.class
-                ), hostNamePc);
+                new BeanPropertyRowMapper(Maquina.class), hostNamePc);
 
         if (maquinas.size() > 0) {
             if ((maquinas.get(0).getNomeDono().equals(nome)) && (maquinas.get(0).getSobrenomeDono().equals(sobrenome)) && (maquinas.get(0).getHostName().equals(hostName))) {
                 logger.info("Login realizado por " + nome + " efetuado com sucesso!!");
-                               
+
                 String hostNameMaquina = looca.getRede().getParametros().getHostName();
-                 maquinas = jdbcAzure.query("SELECT * FROM Maquina WHERE hostName = ?;",
+                maquinas = jdbcAzure.query("SELECT * FROM Maquina WHERE hostName = ?;",
                         new BeanPropertyRowMapper(Maquina.class), hostNameMaquina);
 
                 getFkMaquina = jdbcAzure.query("SELECT fkMaquina FROM Componente;", new BeanPropertyRowMapper(Componente.class));
@@ -138,12 +133,11 @@ public class LoginCLI {
                         Insercao.inserirDadosComponente(jdbcAzure, jdbcMysql, idMaquina);
                         componentes = jdbcAzure.query("SELECT * FROM Componente WHERE fkMaquina = ?;",
                                 new BeanPropertyRowMapper(Componente.class), idMaquina);
-                        
 
                     }
                 }
-                
-                                new Timer().scheduleAtFixedRate(new TimerTask() {
+
+                new Timer().scheduleAtFixedRate(new TimerTask() {
                     @Override
                     public void run() {
 
@@ -155,7 +149,7 @@ public class LoginCLI {
                         for (Componente c : componentes) {
                             Insercao.inserirDadosLog(jdbcAzure, jdbcMysql, c);
                         }
-                        
+
                         DiscoGrupo grupoDeDiscos = looca.getGrupoDeDiscos();
                         List<Disco> discos = grupoDeDiscos.getDiscos();
                         List<Volume> volumes = grupoDeDiscos.getVolumes();
@@ -165,21 +159,13 @@ public class LoginCLI {
                                 Long emUso = (volume.getTotal() - volume.getDisponivel());
                             }
                         }
-                        
+
                     }
                 }, 0, 5000);
-            }
-        
-                
-                
-            
-                
-                
-                
             } else {
                 System.out.println("Não encontrado");
                 logger.severe("Login realizado por " + nome + " falhou!!");
             }
-        }}
-   
-                        
+        }
+    }
+}
