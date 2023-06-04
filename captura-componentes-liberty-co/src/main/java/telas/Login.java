@@ -42,13 +42,13 @@ public class Login extends javax.swing.JFrame {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         String dataFormatada = dateFormat.format(date);
 
-        Path pathW = Paths.get("/home/mari/Área\\ de\\ Trabalho");
+        Path pathW = Paths.get("/home/mari/Liberty-co");
         if (!Files.exists(pathW)) {
             Files.createDirectory(pathW);
         }
 
         FileHandler fileHandler = new FileHandler(String.format("/home/mari/Área\\ de\\ Trabalho/%s.txt", dataFormatada),true);
-        
+         
         fileHandler.setFormatter(new Formatter() {
             private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd >> HH:mm:ss");
 
