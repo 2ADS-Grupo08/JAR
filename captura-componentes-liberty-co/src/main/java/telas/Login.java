@@ -28,45 +28,13 @@ import java.util.logging.Logger;
  *
  * @author mari
  */
-import java.util.logging.FileHandler;
+import log.Log;
+import log.LogEntrada;
 
 public class Login extends javax.swing.JFrame {
 
     private static JdbcTemplate jdbcAzure;
     private static Looca looca;
-
-    private static final Logger logger = Logger.getLogger(Login.class.getName());
-
-    public static void logFormatacao() throws IOException {
-        Date date = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-        String dataFormatada = dateFormat.format(date);
-
-        Path pathW = Paths.get("/home/mari/Liberty-co");
-        if (!Files.exists(pathW)) {
-            Files.createDirectory(pathW);
-        }
-
-        FileHandler fileHandler = new FileHandler(String.format("/home/mari/Área\\ de\\ Trabalho/%s.txt", dataFormatada),true);
-         
-        fileHandler.setFormatter(new Formatter() {
-            private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd >> HH:mm:ss");
-
-            public String format(LogRecord record) {
-                StringBuilder builder = new StringBuilder();
-                builder.append(dateFormat.format(new Date())).append(" ");
-                builder.append(record.getLevel()).append(": ");
-                builder.append(record.getMessage()).append(" (");
-                builder.append(record.getSourceClassName()).append(".");
-                builder.append(record.getSourceMethodName()).append(")");
-                builder.append(System.lineSeparator());
-                return builder.toString();
-            }
-        }
-        );
-        logger.addHandler(fileHandler);
-        logger.setLevel(Level.ALL);
-    }
 
     public Login() {
         initComponents();
@@ -77,7 +45,7 @@ public class Login extends javax.swing.JFrame {
 
         //Conectando com o Looca
         looca = new Looca();
-    }
+        }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -276,11 +244,11 @@ public class Login extends javax.swing.JFrame {
         if (maquinas.size() > 0) {
             if ((maquinas.get(0).getNomeDono().equals(nome)) && (maquinas.get(0).getSobrenomeDono().equals(sobrenome)) && (maquinas.get(0).getHostName().equals(hostName))) {
                 telaCaptura.main(new String[]{});
+                Log logEntrada = new LogEntrada("Log de Login", nome, "Log de Login");
+                logEntrada.criarLog();
                 dispose();
-                logger.info("Login realizado por " + nome + " efetuado com sucesso!!");
             } else {
                 System.out.println("Não encontrado");
-                logger.severe("Login realizado por " + nome + " falhou!!");
             }
         };
     }//GEN-LAST:event_bt_entrarActionPerformed
@@ -322,7 +290,6 @@ public class Login extends javax.swing.JFrame {
                 new Login().setVisible(true);
             }
         });
-        logFormatacao();
         
     }
 

@@ -187,12 +187,6 @@ CREATE TABLE IF NOT EXISTS Maquina (
     status VARCHAR(45),	
     fkGestor INT
 );
-CREATE TABLE IF NOT EXISTS Processo (
-	idProcesso INT PRIMARY KEY AUTO_INCREMENT,
-    nomeProcesso VARCHAR(45),
-    fkGestor INT,
-    fkMaquina INT
-);
 CREATE TABLE IF NOT EXISTS Componente (
 	idComponente INT PRIMARY KEY AUTO_INCREMENT,
 	nomeComponente VARCHAR(45),
