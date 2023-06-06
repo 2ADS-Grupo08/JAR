@@ -445,7 +445,7 @@ public class TelaCaptura extends javax.swing.JFrame {
                         
                         tela.validarComponenteEmNivelAlerta(componentes);
                     }
-                }, 0, 30000);
+                }, 0, 5000);
             }
         });
     }
